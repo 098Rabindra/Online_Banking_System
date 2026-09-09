@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Online Banking Login</title>
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    height:100vh;
+    overflow:hidden;
+    background:linear-gradient(135deg,#002855,#004e92);
+}
+
+/* Top Bar */
+
+.top-bar{
+    height:50px;
+    display:flex;
+    align-items:center;
+    background:#001f3f;
+    color:white;
+    font-weight:600;
+    font-size:14px;
+}
+
+/* Main Container */
+
+.container{
+    width:92%;
+    height:calc(100vh - 70px);
+    margin:10px auto;
+    display:flex;
+    background:white;
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:0 15px 40px rgba(0,0,0,.25);
+}
+
+/* Login Section */
+
+.login-section{
+    width:40%;
+    padding:25px;
+    overflow-y:auto;
+}
+
+.login-header{
+    font-size:30px;
+    font-weight:700;
+    color:#003366;
+    margin-bottom:8px;
+}
+
+.subtitle{
+    font-size:14px;
+    color:#666;
+    margin-bottom:15px;
+}
+
+.note{
+    background:#fff3cd;
+    color:#856404;
+    padding:10px;
+    border-radius:8px;
+    margin-bottom:18px;
+    font-size:13px;
+}
+
+/* Form */
+
+label{
+    display:block;
+    margin-bottom:6px;
+    font-weight:600;
+    color:#333;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    border:2px solid #e5e5e5;
+    border-radius:10px;
+    font-size:14px;
+    transition:.3s;
+}
+
+input:focus{
+    outline:none;
+    border-color:#0056b3;
+    box-shadow:0 0 8px rgba(0,86,179,.2);
+}
+
+/* Error Message */
+
+.error-msg{
+    min-height:18px;
+    margin-top:3px;
+    margin-bottom:8px;
+    font-size:13px;
+    color:red;
+    font-weight:500;
+}
+
+/* Error Border */
+
+.input-error{
+    border:2px solid red !important;
+}
+
+/* Captcha */
+
+.captcha-container{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:12px;
+}
+
+.captcha-box{
+    flex:1;
+    background:#eef5ff;
+    border:2px dashed #0056b3;
+    border-radius:10px;
+    padding:12px;
+    text-align:center;
+    font-size:24px;
+    font-weight:bold;
+    letter-spacing:6px;
+    color:#0056b3;
+}
+
+.refresh-btn{
+    width:50px;
+    height:50px;
+    min-width:50px;
+    border:none;
+    border-radius:50%;
+    background:linear-gradient(135deg,#0056b3,#008cff);
+    color:white;
+    font-size:22px;
+    cursor:pointer;
+    transition:.4s;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.refresh-btn:hover{
+    transform:rotate(180deg);
+    box-shadow:0 5px 15px rgba(0,86,179,.4);
+}
+
+/* Links */
+
+.links{
+    margin:12px 0 20px;
+}
+
+.links a{
+    display:block;
+    text-decoration:none;
+    color:#0056b3;
+    font-weight:600;
+    margin-bottom:8px;
+}
+
+.links a:hover{
+    color:#003366;
+}
+
+/* Buttons */
+
+.button-group{
+    display:flex;
+    gap:12px;
+}
+
+.button-group button{
+    flex:1;
+    height:48px;
+    border:none;
+    border-radius:10px;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.login-btn{
+    background:linear-gradient(135deg,#0056b3,#008cff);
+    color:white;
+}
+
+.login-btn:hover{
+    transform:translateY(-2px);
+}
+
+.reset-btn{
+    background:#ececec;
+    color:#333;
+}
+
+.reset-btn:hover{
+    background:#dcdcdc;
+}
+
+/* OTP Section */
+
+.otp-section{
+    display:none;
+    margin-top:20px;
+}
+
+/* Result */
+
+#result{
+    margin-top:15px;
+    padding:8px;
+    border-radius:8px;
+    font-size:14px;
+    font-weight:600;
+}
+
+/* Banner Section */
+
+.banner-section{
+    width:60%;
+    position:relative;
+}
+
+.banner-section img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.banner-section::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:rgba(0,30,60,.55);
+}
+
+.banner-content{
+    position:absolute;
+    top:50%;
+    left:40px;
+    transform:translateY(-50%);
+    color:white;
+    z-index:2;
+}
+
+.banner-content h2{
+    font-size:42px;
+    margin-bottom:15px;
+}
+
+.banner-content p{
+    font-size:18px;
+    line-height:1.6;
+    margin-bottom:20px;
+    max-width:500px;
+}
+
+.banner-content ul{
+    list-style:none;
+}
+
+.banner-content li{
+    margin-bottom:10px;
+    font-size:17px;
+}
+
+.back-container{
+    margin-top:12px;
+}
+
+.back-btn{
+    width:100%;
+    height:48px;
+    border:none;
+    border-radius:10px;
+    background:#6c757d;
+    color:white;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+}
+
+
+/* Mobile View */
+
+@media screen and (max-width:768px){
+
+    .banner-section{
+        display:none;
+    }
+
+    .container{
+        width:100%;
+        height:auto;
+        margin:0;
+        border-radius:0;
+    }
+
+    .login-section{
+        width:100%;
+        padding:15px;
+    }
+
+    /* Captcha */
+    .captcha-container{
+        display:flex;
+        flex-direction:row;
+        align-items:center;
+        gap:8px;
+    }
+
+    .captcha-box{
+        flex:1;
+    }
+
+    .refresh-btn{
+        width:48px;
+        height:48px;
+        min-width:48px;
+        border-radius:50%;
+        flex-shrink:0;
+    }
+
+    /* Login & Reset Buttons */
+    .button-group{
+        display:flex;
+        flex-direction:column;
+        gap:10px;
+        width:100%;
+    }
+
+    .button-group button{
+        width:100%;
+        height:45px;
+        font-size:16px;
+        font-weight:600;
+        border-radius:10px;
+    }
+
+    /* Back Button */
+    .back-btn{
+        width:100%;
+        height:45px;
+        font-size:16px;
+        border-radius:10px;
+    }
+
+    .back-container{
+        margin-top:10px;
+    }
+}
+
+.password-wrapper{
+    position:relative;
+    width:100%;
+}
+
+.password-wrapper input{
+    width:100%;
+    padding-right:50px;
+}
+
+.eye-icon{
+    position:absolute;
+    right:15px;
+    top:14px;
+    cursor:pointer;
+    font-size:18px;
+    color:#666;
+    z-index:10;
+}
+
+.eye-icon.active{
+    color:#0056b3;
+}
+.loader{
+    width:60px;
+    height:60px;
+    border:6px solid #dbe7ff;
+    border-top:6px solid #0056b3;
+    border-radius:50%;
+    margin:0 auto;
+    animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+    0%{
+        transform:rotate(0deg);
+    }
+    100%{
+        transform:rotate(360deg);
+    }
+}
+.swal2-popup.otp-popup-custom {
+    border-radius: 18px !important;
+    padding: 25px 15px !important;
+    font-family: 'Segoe UI', sans-serif !important;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2) !important;
+}
+.swal2-title.otp-title-custom {
+    font-size: 24px !important;
+    font-weight: 700 !important;
+    color: #002855 !important;
+}
+.swal2-title.otp-title-admin-custom {
+    font-size: 24px !important;
+    font-weight: 700 !important;
+    color: #dc3545 !important;
+}
+.otp-confirm-custom {
+    padding: 12px 30px !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    border-radius: 10px !important;
+    transition: 0.3s !important;
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-bar">
+    <marquee>
+        Welcome to Online Banking System | Secure Banking | 24×7 Services Available
+    </marquee>
+</div>
+
+<div class="container">
+
+    <!-- Login Section -->
+    <div class="login-section">
+
+        <h1 class="login-header">Welcome Back</h1>
+
+        <p class="subtitle">
+            Access your secure online banking account
+        </p>
+
+        <p class="note">
+            Username and Password are case sensitive.
+        </p>
+
+        <label>Email</label>
+        <input type="email"
+               id="loginEmail"
+               placeholder="Enter Email">
+
+        <div id="emailError" class="error-msg"></div>
+
+        <label>Password</label>
+
+<div class="password-wrapper">
+    <input type="password"
+           id="loginPassword"
+           placeholder="Enter Password">
+
+    <i class="fa-solid fa-eye eye-icon"
+       onclick="togglePassword('loginPassword', this)"></i>
+</div>
+
+<div id="passwordError" class="error-msg"></div>
+
+        <label>Captcha</label>
+
+        <div class="captcha-container">
+
+            <div class="captcha-box">
+                <span id="captchaText"></span>
+            </div>
+
+            <button type="button"
+                    class="refresh-btn"
+                    onclick="generateCaptcha()">
+                ↻
+            </button>
+
+        </div>
+
+        <input type="text"
+               id="captchaInput"
+               placeholder="Enter Captcha">
+
+        <div id="captchaError" class="error-msg"></div>
+
+        <div class="links">
+<a href="#" onclick="openRegistration()">New User Registration</a>
+            <a href="forgot.html">Forgot Password?</a>
+        </div>
+
+<div class="button-group">
+
+    <button class="login-btn"
+            onclick="loginUser()">
+        Login
+    </button>
+
+    <button class="reset-btn"
+            onclick="resetForm()">
+        Reset
+    </button>
+
+</div>
+
+<div class="back-container">
+    <button class="back-btn"
+            onclick="window.location.href='main_page.html'">
+        ← Back to Home
+    </button>
+</div>
+
+       
+        <div id="result"></div>
+
+    </div>
+
+    <!-- Banner -->
+
+    <div class="banner-section">
+
+        <img
+        src="https://images.unsplash.com/photo-1556740749-887f6717d7e4?w=1200"
+        alt="Banking">
+
+        <div class="banner-content">
+
+            <h2>Digital Banking Reimagined</h2>
+
+            <p>
+                Manage accounts, transfer funds,
+                pay bills and access banking services
+                from anywhere.
+            </p>
+
+            <ul>
+                <li>✓ Secure Transactions</li>
+                <li>✓ Instant Fund Transfer</li>
+                <li>✓ 24×7 Banking Access</li>
+                <li>✓ OTP Protected Login</li>
+            </ul>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+
+function openRegistration() {
+
+    sessionStorage.setItem(
+        "allowRegistration",
+        "true"
+    );
+
+    window.location.href = "register.html";
+}
+
+let generatedCaptcha = "";
+let loginEmail = "";
+
+function generateCaptcha(){
+
+    const chars =
+    "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+
+    generatedCaptcha = "";
+
+    for(let i=0;i<5;i++){
+
+        generatedCaptcha += chars.charAt(
+        Math.floor(Math.random()*chars.length)
+        );
+    }
+
+    document.getElementById(
+    "captchaText").innerText = generatedCaptcha;
+}
+
+function showFieldError(fieldId,message){
+
+    document.getElementById(fieldId)
+    .innerText = message;
+}
+
+async function loginUser(){
+
+    document.getElementById("emailError").innerText = "";
+    document.getElementById("passwordError").innerText = "";
+    document.getElementById("captchaError").innerText = "";
+    document.getElementById("result").innerHTML = "";
+
+    document.getElementById("loginEmail")
+        .classList.remove("input-error");
+
+    document.getElementById("loginPassword")
+        .classList.remove("input-error");
+
+    const email =
+    document.getElementById("loginEmail").value.trim();
+
+    const password =
+    document.getElementById("loginPassword").value.trim();
+
+    const captcha =
+    document.getElementById("captchaInput").value.trim();
+
+    let valid = true;
+
+    if(email === ""){
+
+        showFieldError(
+            "emailError",
+            "Email is required"
+        );
+
+        document.getElementById("loginEmail")
+            .classList.add("input-error");
+
+        valid = false;
+    }
+
+    if(password === ""){
+
+        showFieldError(
+            "passwordError",
+            "Password is required"
+        );
+
+        document.getElementById("loginPassword")
+            .classList.add("input-error");
+
+        valid = false;
+    }
+
+    if(captcha === ""){
+
+        showFieldError(
+            "captchaError",
+            "Captcha is required"
+        );
+
+        valid = false;
+    }
+    else if(captcha !== generatedCaptcha){
+
+        showFieldError(
+            "captchaError",
+            "Invalid Captcha"
+        );
+
+        valid = false;
+    }
+
+    if(!valid){
+        return;
+    }
+
+    try{
+
+        Swal.fire({
+            title: "Verifying Credentials...",
+            html: `
+                <div class="loader"></div>
+                <p style="margin-top:15px">
+                    Please wait, sending OTP...
+                </p>
+            `,
+            allowOutsideClick:false,
+            allowEscapeKey:false,
+            showConfirmButton:false
+        });
+
+        const response = await fetch("/auth/login",{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                email: email,
+                password: password
+            })
+        });
+
+        const result = await response.text();
+
+        Swal.close();
+
+        if(response.ok){
+
+            loginEmail = email;
+            const role = result.trim();
+            const isAdmin = (role === "ROLE_ADMIN");
+
+            Swal.fire({
+                icon:"success",
+                title: isAdmin ? "Admin OTP Sent" : "User OTP Sent",
+                text: isAdmin ? "Administrator verification OTP has been sent." : "User verification OTP has been sent.",
+                timer:1500,
+                showConfirmButton:false
+            }).then(()=>{
+                showOtpPopup(role);
+            });
+
+        }else{
+
+            if(result.trim()==="EMAIL_NOT_FOUND"){
+
+                document.getElementById("emailError").innerText =
+                    "Email is not registered";
+
+                document.getElementById("loginEmail")
+                    .classList.add("input-error");
+
+            }else if(result.trim()==="INVALID_PASSWORD"){
+
+                document.getElementById("passwordError").innerText =
+                    "Incorrect password";
+
+                document.getElementById("loginPassword")
+                    .classList.add("input-error");
+
+            }else{
+
+                Swal.fire({
+                    icon:"error",
+                    title:"Login Failed",
+                    text:result
+                });
+            }
+        }
+
+    }catch(e){
+
+        Swal.close();
+
+        Swal.fire({
+            icon:"error",
+            title:"Server Error",
+            text:"Unable to connect to server."
+        });
+    }
+}
+
+
+
+function resetForm(){
+
+    document.getElementById("loginEmail").value="";
+    document.getElementById("loginPassword").value="";
+    document.getElementById("captchaInput").value="";
+ 
+
+    document.getElementById("emailError").innerText="";
+    document.getElementById("passwordError").innerText="";
+    document.getElementById("captchaError").innerText="";
+  
+    document.getElementById("result").innerHTML="";
+
+
+    generateCaptcha();
+}
+
+window.onload = generateCaptcha;
+
+function togglePassword(id, icon){
+
+    const input = document.getElementById(id);
+
+    if(input.type === "password"){
+
+        input.type = "text";
+
+        icon.classList.remove("fa-eye");
+        icon.classList.add("fa-eye-slash");
+        icon.classList.add("active");
+
+    }else{
+
+        input.type = "password";
+
+        icon.classList.remove("fa-eye-slash");
+        icon.classList.add("fa-eye");
+        icon.classList.remove("active");
+    }
+}
+
+
+
+let otpTimer;
+let timeLeft = 120;
+
+function showOtpPopup(role) {
+
+    timeLeft = 120;
+
+    const isAdmin = (role === "ROLE_ADMIN");
+    const accentColor = isAdmin ? "#dc3545" : "#0056b3";
+    const popupTitle = isAdmin ? "Admin OTP Verification" : "User OTP Verification";
+    const subtext = isAdmin ? "Enter the administrator verification OTP sent to your email" : "Enter the verification OTP sent to your email";
+
+    Swal.fire({
+        title: popupTitle,
+        html: `
+            <div style="font-family:'Segoe UI',sans-serif; text-align:center; padding: 10px 0;">
+                <p style="font-size: 14px; color: #666; margin-bottom: 20px;">${subtext}</p>
+                <div style="position: relative; width: 100%; max-width: 260px; margin: 0 auto;">
+                    <input type="text"
+                           id="swalOtp"
+                           class="swal2-input"
+                           placeholder="••••••"
+                           maxlength="6"
+                           style="width: 100%; height: 50px; font-size: 24px; font-weight: bold; text-align: center; letter-spacing: 8px; border: 2px solid ${accentColor}; border-radius: 12px; margin: 0 auto 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); outline: none; transition: 0.3s; box-sizing: border-box;">
+                </div>
+                <div style="margin-top:15px; font-size: 15px; color: #333; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                    <i class="fa-regular fa-clock" style="color: ${accentColor}; font-size: 16px;"></i>
+                    <span>Time Remaining:</span>
+                    <span id="otpTimer" style="font-weight: 700; color: ${accentColor}; min-width: 45px;">02:00</span>
+                </div>
+                <div style="margin-top: 20px; font-size: 14px;">
+                    <a href="#" id="resendOtpBtn" style="color: ${accentColor}; font-weight: 600; text-decoration: none; border-bottom: 1px dashed ${accentColor}; transition: 0.2s;">
+                        Resend OTP
+                    </a>
+                </div>
+            </div>
+        `,
+        confirmButtonText: "Verify OTP",
+        confirmButtonColor: accentColor,
+        allowOutsideClick: false,
+        customClass: {
+            popup: 'otp-popup-custom',
+            title: isAdmin ? 'otp-title-admin-custom' : 'otp-title-custom',
+            confirmButton: 'otp-confirm-custom'
+        },
+
+        didOpen: () => {
+
+            startOtpTimer();
+
+            document
+                .getElementById("resendOtpBtn")
+                .addEventListener("click", function(e) {
+
+                    e.preventDefault();
+                    resendOtp();
+
+                });
+        },
+
+        preConfirm: async () => {
+
+            const otp =
+                document.getElementById("swalOtp")
+                .value.trim();
+
+            if (!otp) {
+
+                Swal.showValidationMessage(
+                    "Please enter OTP"
+                );
+
+                return false;
+            }
+
+            const response =
+                await fetch(
+                    "/auth/verify-login-otp",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+                        body: JSON.stringify({
+                            email: loginEmail,
+                            otp: otp
+                        })
+                    }
+                );
+
+            if (!response.ok) {
+
+                const errorText =
+                    await response.text();
+
+                Swal.showValidationMessage(
+                    errorText || "Invalid OTP"
+                );
+
+                return false;
+            }
+
+            clearInterval(otpTimer);
+
+            return await response.json();
+        }
+
+    }).then((result) => {
+
+        if (result.isConfirmed) {
+
+            const token =
+                result.value.token;
+
+            const role =
+                result.value.role;
+
+            localStorage.setItem(
+                "token",
+                token
+            );
+
+            localStorage.setItem(
+                "role",
+                role
+            );
+
+            localStorage.setItem(
+                "userEmail",
+                loginEmail
+            );
+
+            if (role === "ROLE_ADMIN") {
+
+                Swal.fire({
+                    icon: "success",
+                    title:
+                        "Admin Login Successful",
+                    text:
+                        "Welcome Administrator",
+                    confirmButtonColor:
+                        "#0056b3",
+                    timer: 2000,
+                    showConfirmButton:
+                        false
+                }).then(() => {
+
+                    window.location.href =
+                        "admin_dashboard.html";
+
+                });
+
+            } else {
+
+                Swal.fire({
+                    icon: "success",
+                    title:
+                        "User Login Successful",
+                    text:
+                        "Welcome to Online Banking",
+                    confirmButtonColor:
+                        "#0056b3",
+                    timer: 2000,
+                    showConfirmButton:
+                        false
+                }).then(() => {
+
+                    window.location.href =
+                        "index.html";
+
+                });
+            }
+        }
+    });
+}
+function startOtpTimer(){
+
+    clearInterval(otpTimer);
+
+    otpTimer = setInterval(() => {
+
+        const timerElement =
+            document.getElementById("otpTimer");
+
+        if(!timerElement){
+            clearInterval(otpTimer);
+            return;
+        }
+
+        const minutes =
+            Math.floor(timeLeft / 60);
+
+        const seconds =
+            timeLeft % 60;
+
+        timerElement.innerText =
+            String(minutes).padStart(2,"0")
+            + ":" +
+            String(seconds).padStart(2,"0");
+
+        timeLeft--;
+
+        if(timeLeft < 0){
+
+            clearInterval(otpTimer);
+
+            timerElement.innerHTML =
+                "<span style='color:red'>OTP Expired</span>";
+
+            Swal.fire({
+                icon:"warning",
+                title:"OTP Expired",
+                text:"Please click Resend OTP"
+            });
+        }
+
+    },1000);
+}
+
+async function resendOtp(){
+    const resendBtn = document.getElementById("resendOtpBtn");
+    const originalHtml = resendBtn ? resendBtn.innerHTML : "Resend OTP";
+    if (resendBtn) {
+        resendBtn.style.pointerEvents = "none";
+        resendBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Resending...';
+    }
+
+    try{
+
+        const response =
+            await fetch(
+                "/auth/resend-otp?email="
+                + encodeURIComponent(loginEmail),
+                {
+                    method:"POST"
+                }
+            );
+
+        if(response.ok){
+
+            timeLeft = 120;
+
+            clearInterval(otpTimer);
+
+            startOtpTimer();
+
+            document.getElementById(
+                "swalOtp"
+            ).value = "";
+
+            Swal.showValidationMessage(
+                "New OTP sent successfully"
+            );
+
+            setTimeout(() => {
+
+                const msg =
+                    document.querySelector(
+                        ".swal2-validation-message"
+                    );
+
+                if(msg){
+                    msg.style.display = "none";
+                }
+
+            },2000);
+
+        }else{
+
+            Swal.showValidationMessage(
+                "Failed to resend OTP"
+            );
+        }
+
+    }catch(e){
+
+        Swal.showValidationMessage(
+            "Server error while resending OTP"
+        );
+    } finally {
+        if (resendBtn) {
+            resendBtn.style.pointerEvents = "auto";
+            resendBtn.innerHTML = originalHtml;
+        }
+    }
+}
+</script>
+
+</body>
+</html>

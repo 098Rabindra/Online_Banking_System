@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Online Banking System</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    background:#f4f6f9;
+}
+
+/* Header */
+
+.header{
+    background:white;
+    padding:15px 40px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-bottom:1px solid #ddd;
+}
+
+.logo{
+    font-size:34px;
+    font-weight:bold;
+    color:#0056b3;
+}
+
+.logo span{
+    color:#00a2ff;
+}
+
+.top-links a{
+    margin-left:20px;
+    text-decoration:none;
+    color:#555;
+    font-size:14px;
+}
+
+/* Navigation */
+
+.navbar{
+    background:#0066b3;
+}
+
+.navbar ul{
+    display:flex;
+    list-style:none;
+    align-items:center;
+}
+
+.navbar li{
+    position:relative;
+    padding:18px 30px;
+}
+
+.navbar a{
+    color:white;
+    text-decoration:none;
+    font-weight:600;
+}
+
+/* Hero Section */
+
+.hero{
+    margin:20px;
+    background:linear-gradient(135deg,#34a0ff,#7fd5ff);
+    border-radius:12px;
+    min-height:420px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:50px;
+    color:white;
+}
+
+.hero-content h1{
+    font-size:70px;
+    margin-bottom:15px;
+}
+
+.hero-content p{
+    font-size:22px;
+}
+
+.login-panel{
+    background:white;
+    color:#333;
+    width:350px;
+    padding:30px;
+    border-radius:15px;
+    text-align:center;
+    box-shadow:0 5px 20px rgba(0,0,0,.15);
+}
+
+.login-panel h2{
+    color:#0056b3;
+    margin-bottom:20px;
+}
+
+.login-btn{
+    width:100%;
+    padding:15px;
+    border:none;
+    background:#0056b3;
+    color:white;
+    font-size:18px;
+    border-radius:30px;
+    cursor:pointer;
+}
+
+.login-btn:hover{
+    background:#003f85;
+}
+
+.login-panel p{
+    margin-top:15px;
+    font-size:14px;
+}
+
+/* Notice */
+
+.notice{
+    margin:20px;
+    background:white;
+    padding:20px;
+    border-radius:8px;
+    border-left:5px solid #0066b3;
+}
+
+/* Feature Cards */
+
+.features{
+    padding:20px;
+}
+
+.features h2{
+    text-align:center;
+    margin-bottom:25px;
+    color:#003f85;
+}
+
+.card-container{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
+}
+
+.card{
+    background:white;
+    border-radius:10px;
+    padding:25px;
+    text-align:center;
+    box-shadow:0 3px 10px rgba(0,0,0,.08);
+    color:#333333; /* Default text color */
+}
+
+.card h3{
+    margin-bottom:10px;
+}
+
+/* Security */
+
+.security{
+    margin:30px 20px;
+}
+
+.security h2{
+    text-align:center;
+    margin-bottom:20px;
+    color:#003f85;
+}
+
+.security-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
+}
+
+.good{
+    border-top:5px solid green;
+}
+
+.bad{
+    border-top:5px solid red;
+}
+
+.dropdown-content{
+    display:none;
+    position:absolute;
+    top:100%;
+    left:0;
+    background:white;
+    min-width:250px;
+    padding:15px;
+    border-radius:8px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+    z-index:1000;
+}
+
+.dropdown:hover .dropdown-content{
+    display:block;
+}
+
+.scroll-box{
+    max-height:200px;
+    overflow-y:auto;
+}
+
+.scroll-box p{
+    padding:8px;
+    color:#333;
+    cursor:pointer;
+}
+
+.scroll-box p:hover{
+    background:#f0f0f0;
+}
+
+
+.logo-container{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.bank-logo{
+    width:60px;
+    height:60px;
+    object-fit:contain;
+}
+
+.logo{
+    font-size:34px;
+    font-weight:bold;
+    color:#0056b3;
+    line-height:1.1;
+}
+
+
+/* Footer */
+
+.footer{
+    margin-top:30px;
+    background:#003f85;
+    color:white;
+    text-align:center;
+    padding:25px;
+}
+
+.footer a{
+    color:white;
+    margin:0 10px;
+    text-decoration:none;
+}
+
+</style>
+
+</head>
+<body>
+
+<header class="header">
+
+    <div class="logo-container">
+
+        <img src="images/kuumca-logo.png"
+             alt="KUUMCA Bank Logo"
+             class="bank-logo">
+
+        <div class="logo">
+            KUUMCA BANK OF INDIA
+        </div>
+
+    </div>
+
+    <div class="top-links">
+        <a href="#">About Us</a>
+        <a href="#">Forms</a>
+        <a href="#">Branches</a>
+        <a href="#">Contact</a>
+    </div>
+
+</header>
+
+<nav class="navbar">
+    <ul>
+
+        <li><a href="#">Home</a></li>
+
+        <li class="dropdown">
+            <a href="#">Accounts</a>
+
+            <div class="dropdown-content">
+                <div class="scroll-box">
+                    <p>Savings Account</p>
+                    <p>Current Account</p>
+                    <p>Fixed Deposit</p>
+                    <p>Recurring Deposit</p>
+                    <p>NRI Account</p>
+                    <p>Salary Account</p>
+                    <p>Student Account</p>
+                    <p>Senior Citizen Account</p>
+                    <p>Business Account</p>
+                    <p>Joint Account</p>
+                </div>
+            </div>
+        </li>
+
+        <li class= "dropdown">
+        <a href="#">Fund Transfer</a>
+            <div class="dropdown-content">
+                <div class="scroll-box">
+                    <p>NEFT Transfer</p>
+       				<p>RTGS Transfer</p>
+        			<p>IMPS Transfer</p>
+        			<p>UPI Transfer</p>
+        			<p>International Transfer</p>
+        			<p>Scheduled Transfer</p>
+        			<p>Beneficiary Management</p>
+        			<p>Transfer History</p>
+        			<p>Bulk Payments</p>
+        			<p>Merchant Payments</p>
+                </div>
+            </div>
+        </li>
+        
+        
+        
+        
+        <li class="dropdown">
+            <a href="#">Loans</a>
+            <div class="dropdown-content">
+                <div class="scroll-box">
+       				 <p>Home Loan</p>
+        			 <p>Personal Loan</p>
+         			 <p>Education Loan</p>
+        			 <p>Vehicle Loan</p>
+          			 <p>Gold Loan</p>
+         			 <p>Business Loan</p>
+         			 <p>Agriculture Loan</p>
+         			 <p>Loan Calculator</p>
+         			 <p>Loan Status</p>
+         			 <p>EMI Details</p>
+                </div>
+            </div>
+        </li>
+            
+        <li class="dropdown">
+    <a href="#">Cards</a>
+
+    <div class="dropdown-content">
+        <div class="scroll-box">
+            <p>Debit Card</p>
+            <p>Credit Card</p>
+            <p>Prepaid Card</p>
+            <p>Virtual Card</p>
+            <p>Business Card</p>
+            <p>RuPay Card</p>
+            <p>Visa Card</p>
+            <p>MasterCard</p>
+            <p>Card Limit Management</p>
+            <p>Block / Unblock Card</p>
+            <p>Card PIN Generation</p>
+            <p>International Usage Settings</p>
+            <p>Card Transaction History</p>
+            <p>Apply New Card</p>
+        </div>
+    </div>
+</li>
+        
+        <li><a href="#">Support</a></li>
+
+    </ul>
+</nav>
+
+<section class="hero">
+<div class="hero-content">
+ <h1>Digital Banking</h1>
+<p>Bank Anytime, Anywhere</p>
+<small>
+Experience secure online banking, fund transfers,
+account management, loan services and real-time transactions.
+</small>
+<section class="features">
+    <h2>Why Choose MyBank?</h2>
+
+    <div class="card-container">
+
+        <div class="card">
+            <h3>500K+</h3>
+            <p>Active Customers</p>
+        </div>
+
+        <div class="card">
+            <h3>₹500 Cr+</h3>
+            <p>Monthly Transactions</p>
+        </div>
+
+        <div class="card">
+            <h3>99.99%</h3>
+            <p>Secure Banking Uptime</p>
+        </div>
+
+        <div class="card">
+            <h3>24×7</h3>
+            <p>Customer Support</p>
+        </div>
+
+    </div>
+</section>
+</div>
+
+<div class="login-panel">
+
+    <h2>Internet Banking</h2>
+
+    <button class="login-btn"
+            onclick="window.location.href='login.html'">
+        Continue To Login
+    </button>
+    <p>
+        OTP based authentication enabled for enhanced security.
+    </p>
+
+</div>
+
+
+</section>
+
+<div class="notice">
+    By clicking "Continue To Login", you agree to the Terms and Conditions of Online Banking Services.
+</div>
+
+<section class="features">
+<h2>Our Services</h2>
+
+<div class="card-container">
+
+    <div class="card">
+        <h3>Account Management</h3>
+        <p>Manage all your savings and current accounts.</p>
+    </div>
+
+    <div class="card">
+        <h3>Fund Transfer</h3>
+        <p>Transfer money instantly and securely.</p>
+    </div>
+
+    <div class="card">
+        <h3>Loan Services</h3>
+        <p>Apply and manage loans online.</p>
+    </div>
+
+    <div class="card">
+        <h3>Transaction History</h3>
+        <p>View and download statements anytime.</p>
+    </div>
+
+</div>
+
+</section>
+
+<section class="security">
+<h2>For Your Security</h2>
+
+<div class="security-grid">
+
+    <div class="card good">
+        <h3>✅ ALWAYS</h3>
+        <p>Keep your computer protected from malware</p>
+    </div>
+
+    <div class="card good">
+        <h3>🔒 ALWAYS</h3>
+        <p>Change your passwords periodically</p>
+    </div>
+
+    <div class="card bad">
+        <h3>❌ NEVER</h3>
+        <p>respond to any communication seeking your passwords</p>
+    </div>
+
+    <div class="card bad">
+        <h3>🚫 NEVER</h3>
+        <p>revel your passwords or card details to anyone</p>
+    </div>
+
+</div>
+</section>
+
+<footer class="footer">
+<p>© MyBank Online Banking System</p>
+
+<br>
+
+<a href="#">Privacy Policy</a>
+<a href="#">Terms and  Conditions</a>
+<a href="#">Contact Us</a>
+
+</footer>
+
+</body>
+</html>
+
